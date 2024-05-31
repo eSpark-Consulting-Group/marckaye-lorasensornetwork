@@ -7,6 +7,7 @@
 #include "sio2host.h"
 #include "modbus.h"
 #include "sensors.h"
+#include "p2p_demo.h"
 
 
 #if defined(ENABLE_NETWORK_FREEZER)
@@ -27,7 +28,7 @@
 #include "sleepmgr.h"
 
 /************************** DEFINITIONS **********************************/
-
+bool flag=false;
 /************************** PROTOTYPES **********************************/
 void ReadMacAddress(void);
 SYSTEM_TaskStatus_t APP_TaskHandler(void);
@@ -66,6 +67,7 @@ void rx_lora_data(uint16_t len, uint8_t *x)
 	uint8_t wr_n;
 	
 	i=0;
+	printf("Buf:");
 	while(len--)
 	{
 		wr_n = wr_i + 1;
@@ -73,9 +75,11 @@ void rx_lora_data(uint16_t len, uint8_t *x)
 		if(wr_n != rd_i)
 		{
 			tbuf[wr_i] = x[i++];
+			printf("%d,",tbuf[wr_i]);
 			wr_i=wr_n;
-		}	
+		}
 	}
+	printf("\r\n");
 }
 
 bool rx_empty(void)
@@ -128,7 +132,7 @@ int main ( void )
 
 	// Start USB stack to authorize VBus monitoring
 	udc_start();
-
+	
 #if defined (ENABLE_LCD)
 	LCD_Initialize();
 #endif
@@ -146,12 +150,12 @@ int main ( void )
 #endif
 
 	SystemTimerInit();
-
+	
 	RN4871_Setup("Cadlink");
 
     // Demo Start Message
     DemoOutput_Greeting();
-
+	
 	nvm_init(INT_FLASH);
 
 
@@ -178,22 +182,35 @@ int main ( void )
 	first=true;
 	
 	LED_Off(LED0);
+	//delay_ms(2000);
+	uint32_t current_time,previoustime;
     while(1)
     {
 		SYSTEM_RunTasks();
 
 		Run_Demo();
-
-		if(usb_port_open())
+		LED_On(LED0);
+		//delay_ms(1500);
+		if(1) //usb_port_open()
 		{
-			LED_On(LED0);
+			LED_Off(LED0);
 			
-			Modbus(0);
-			
-			if((!rx_empty()) && udi_cdc_is_tx_ready())
+			//flag=false;
+			current_time=MiWi_TickGet();
+			if(current_time-previoustime > 5000000)
 			{
-				if(udi_cdc_putc(rx_peekc()))
-					rx_getc();
+				//printf("Sending data again!\r\n");
+				static uint8_t	header[MB_HEADER_LEN+2]={0x03, 0x04, 0x00, 0x00, 0x00, 0x15, 0x30, 0x27};
+				p2p_demo_send_data(0, 0, header, MB_HEADER_LEN+2) ;
+				//delay_s(3);
+				previoustime=current_time;
+			}
+			//for(int i=0;i<MB_HEADER_LEN+2;i++)
+				//Modbus(0,header[i]);
+			//delay_ms(500);
+			if(!rx_empty())
+			{
+				rx_getc();
 			}
 				
 		}
@@ -201,15 +218,15 @@ int main ( void )
 		{
 			LED_Off(LED0);
 			
-			Modbus2(0);
-
-			if(!rx_empty())
-			{		
-				t=rx_peekc();
-				
-				if(sio2host_tx(&t, 1))
-					rx_getc();
-			}			
+			//Modbus2(0);
+//
+			//if(!rx_empty())
+			//{		
+				//t=rx_peekc();
+				//
+				//if(sio2host_tx(&t, 1))
+					//rx_getc();
+			//}			
 			
 		}
 

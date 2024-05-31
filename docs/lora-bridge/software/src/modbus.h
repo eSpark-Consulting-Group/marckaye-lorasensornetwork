@@ -33,7 +33,7 @@ void	Modbus2_initialise(uint8_t device_lo,uint8_t device_hi);
 //
 // Poll the modbus slave interface
 //
-void	Modbus(bool test);
+void	Modbus(bool test, int16_t byte);
 void	Modbus2(bool test);
 
 bool usb_port_open(void);

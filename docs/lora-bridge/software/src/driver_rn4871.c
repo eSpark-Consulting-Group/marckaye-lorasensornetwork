@@ -141,18 +141,18 @@ void RN4871_Setup(const char *name)
 	SENSORS_MUXSEL(0);
 
 	RN4871_Reset_Module();
-	RN4871_sendAndWait("$$$", "CMD> ", 40);
-	RN4871_sendAndWait("SS,C0\r\n", "AOK\r\n", 40);			// uart and device information
-	RN4871_sendAndWait("SR,00000000\r\n", "AOK\r\n", 40);	// disable all features
+	//RN4871_sendAndWait("$$$", "CMD> ", 40);
+	//RN4871_sendAndWait("SS,C0\r\n", "AOK\r\n", 40);			// uart and device information
+	//RN4871_sendAndWait("SR,00000000\r\n", "AOK\r\n", 40);	// disable all features
 	//RN4871_sendAndWait("PS,180F\r\n", "AOK\r\n", 40);		
 	//RN4871_sendAndWait("PC,2A19,10,05\r\n", "AOK\r\n", 40);
 	sprintf(nameString, "S-,%s\r\n", name);
-	RN4871_sendAndWait(nameString, "AOK\r\n", 40);
-	RN4871_sendAndWait("R,1\r\n", "Rebooting", 40);
-	RN4871_sendAndWait("$$$", "CMD> ", 40);
-	RN4871_sendAndWait("A\r\n", "AOK\r\n", 40);
-	RN4871_sendAndWait("SO,1\r\n", "AOK\r\n", 40);			// deep sleep
-	RN4871_sendAndWait("---\r\n", "END", 40);
+	//RN4871_sendAndWait(nameString, "AOK\r\n", 40);
+	//RN4871_sendAndWait("R,1\r\n", "Rebooting", 40);
+	//RN4871_sendAndWait("$$$", "CMD> ", 40);
+	//RN4871_sendAndWait("A\r\n", "AOK\r\n", 40);
+	//RN4871_sendAndWait("SO,1\r\n", "AOK\r\n", 40);			// deep sleep
+	//RN4871_sendAndWait("---\r\n", "END", 40);
 	RN4871_ClearReceivedMessage();
 	
 	SENSORS_MUXSEL(1);

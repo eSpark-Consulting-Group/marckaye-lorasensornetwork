@@ -122,7 +122,7 @@ void TxToutCallback(void)
 void dataConfcb(uint8_t handle, miwi_status_t status, uint8_t* msgPointer)
 {
 #if defined (ENABLE_CONSOLE)
-	printf("\nData Confirm: Handle: %d status:%d \r\n", handle, status);
+	//printf("\nData Confirm: Handle: %d status:%d \r\n", handle, status);
 #endif // #if defined (ENABLE_CONSOLE)
 #if defined(ENABLE_SLEEP_FEATURE)
 	send_data = 0;
@@ -438,7 +438,7 @@ void ReceivedDataIndication (RECEIVED_MESSAGE *ind)
 	}
 	else
 	{
-	//	printf("Packet received from other Source PAN ID : 0x%x%x\r\n",ind->SourcePANID.v[1],ind->SourcePANID.v[0]);
+		printf("Packet received from other Source PAN ID : 0x%x%x\r\n",ind->SourcePANID.v[1],ind->SourcePANID.v[0]);
 	}
 }
 
@@ -495,7 +495,7 @@ void p2p_demo_send_data(uint8_t msgType, uint8_t targetAddr, uint8_t *data, uint
 	}
 	else
 	{
-		printf("\r\nSending broadcast message\r\n") ;
+		//printf("\r\nSending broadcast message\r\n") ;
 #if 0
 		for (i = 0; i < len; i++)
 		{
@@ -519,6 +519,7 @@ void p2p_demo_send_data(uint8_t msgType, uint8_t targetAddr, uint8_t *data, uint
 	{
 		// broadcast message
 		sendData_status = MiApp_SendData(SHORT_ADDR_LEN, (uint8_t *)&broadcastAddress, dataLen, dataPtr, msghandledemo++, 0, dataConfcb) ;
+		//printf("Status:%d\r\n",sendData_status);
 	}
 
 	if (sendData_status == false)

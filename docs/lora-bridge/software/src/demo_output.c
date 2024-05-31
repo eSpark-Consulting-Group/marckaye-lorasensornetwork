@@ -147,26 +147,26 @@ void DemoOutput_HandleMessage(void)
 
     if( rxMessage.flags.bits.broadcast )
     {
-        sio2host_tx((uint8_t *)"Broadcast Packet with RSSI ", sizeof("Broadcast Packet with RSSI "));
+        //sio2host_tx((uint8_t *)"Broadcast Packet with RSSI ", sizeof("Broadcast Packet with RSSI "));
     }
     else
     {
         sio2host_tx((uint8_t *)"Unicast Packet with RSSI ",sizeof("Unicast Packet with RSSI "));
     }
-    printf("%02x", rxMessage.PacketRSSI);
+    //printf("%02x", rxMessage.PacketRSSI);
     if( rxMessage.flags.bits.srcPrsnt )
     {
-        sio2host_tx((uint8_t *)" from ", sizeof(" from "));
+        //sio2host_tx((uint8_t *)" from ", sizeof(" from "));
         if( rxMessage.flags.bits.altSrcAddr )
         {
-            printf( "%x", rxMessage.SourceAddress[1]);
-            printf( "%x", rxMessage.SourceAddress[0]);
+            //printf( "%x", rxMessage.SourceAddress[1]);
+            //printf( "%x", rxMessage.SourceAddress[0]);
         }
         else
         {
             for(i = 0; i < MY_ADDRESS_LENGTH; i++)
             {
-                printf("%02x", rxMessage.SourceAddress[MY_ADDRESS_LENGTH-1-i]);
+                //printf("%02x", rxMessage.SourceAddress[MY_ADDRESS_LENGTH-1-i]);
             }
         }
     }
@@ -176,9 +176,9 @@ void DemoOutput_HandleMessage(void)
 
     for(i = 0; i < rxMessage.PayloadSize; i++)
     {
-        printf("[%x]",(int)rxMessage.Payload[i]);
+        //printf("[%x]",(int)rxMessage.Payload[i]);
     }
-	printf("\r\n");
+	//printf("\r\n");
 	#endif
 
 #endif

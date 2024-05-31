@@ -401,8 +401,8 @@
     <OverrideVtorValue>exception_table</OverrideVtorValue>
     <BootSegment>2</BootSegment>
     <eraseonlaunchrule>0</eraseonlaunchrule>
-    <avrtool>com.atmel.avrdbg.tool.pickit4</avrtool>
-    <avrtoolserialnumber>BUR185076446</avrtoolserialnumber>
+    <avrtool>com.atmel.avrdbg.tool.samice</avrtool>
+    <avrtoolserialnumber>801049172</avrtoolserialnumber>
     <avrdeviceexpectedsignature>0x10810228</avrdeviceexpectedsignature>
     <avrtoolinterface>SWD</avrtoolinterface>
     <com_atmel_avrdbg_tool_edbg>
@@ -416,13 +416,13 @@
       <ToolNumber>ATML3355011800000097</ToolNumber>
       <ToolName>EDBG</ToolName>
     </com_atmel_avrdbg_tool_edbg>
-    <avrtoolinterfaceclock>2000000</avrtoolinterfaceclock>
+    <avrtoolinterfaceclock>4000000</avrtoolinterfaceclock>
     <ResetRule>0</ResetRule>
     <EraseKey />
     <com_atmel_avrdbg_tool_pickit4>
       <ToolOptions>
         <InterfaceProperties>
-          <SwdClock>2000000</SwdClock>
+          <SwdClock>0</SwdClock>
         </InterfaceProperties>
         <InterfaceName>SWD</InterfaceName>
       </ToolOptions>
@@ -430,6 +430,18 @@
       <ToolNumber>BUR185076446</ToolNumber>
       <ToolName>MPLAB® PICkit 4</ToolName>
     </com_atmel_avrdbg_tool_pickit4>
+    <com_atmel_avrdbg_tool_samice>
+      <ToolOptions>
+        <InterfaceProperties>
+          <SwdClock>4000000</SwdClock>
+        </InterfaceProperties>
+        <InterfaceName>SWD</InterfaceName>
+        <JlinkConfigFile>C:\Users\eSpark\Documents\GitHub\marckaye-lorasensornetwork\docs\lora-bridge\software\jlink.config</JlinkConfigFile>
+      </ToolOptions>
+      <ToolType>com.atmel.avrdbg.tool.samice</ToolType>
+      <ToolNumber>801049172</ToolNumber>
+      <ToolName>J-Link</ToolName>
+    </com_atmel_avrdbg_tool_samice>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <ToolchainSettings>
@@ -546,6 +558,8 @@
             <Value>../src/ASF/thirdparty/wireless/services/trx_access</Value>
             <Value>../src/config</Value>
             <Value>../src/ASF/thirdparty/wireless/lorawan/sal/inc</Value>
+            <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+            <Value>%24(PackRepoDir)\atmel\WLR089_DFP\1.0.3\include\</Value>
           </ListValues>
         </armgcc.compiler.directories.IncludePaths>
         <armgcc.compiler.optimization.level>Optimize most (-O3)</armgcc.compiler.optimization.level>
@@ -566,6 +580,7 @@
             <Value>../src/ASF/thirdparty/CMSIS/Lib/GCC</Value>
             <Value>../src/ASF/thirdparty/wireless/lorawan/libgen/sam0/gcc</Value>
             <Value>../src/ASF/thirdparty/wireless/services/common_hw_timer/sam0/lib</Value>
+            <Value>%24(ProjectDir)\Device_Startup</Value>
           </ListValues>
         </armgcc.linker.libraries.LibrarySearchPaths>
         <armgcc.linker.optimization.GarbageCollectUnusedSections>True</armgcc.linker.optimization.GarbageCollectUnusedSections>
@@ -641,6 +656,8 @@
             <Value>../src/ASF/thirdparty/wireless/services/sleep_mgr</Value>
             <Value>../src/ASF/thirdparty/wireless/services/trx_access</Value>
             <Value>../src/config</Value>
+            <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+            <Value>%24(PackRepoDir)\atmel\WLR089_DFP\1.0.3\include\</Value>
           </ListValues>
         </armgcc.assembler.general.IncludePaths>
         <armgcc.preprocessingassembler.general.AssemblerFlags>-DARM_MATH_CM0PLUS=true -DAS_BAND=1 -DAU_BAND=1 -DBOARD=SAMR34_XPLAINED_PRO -DCONF_PMM_ENABLE -DENABLE_NETWORK_FREEZER -DEU_BAND=1 -DEXTINT_CALLBACK_MODE=true -DGFX_MONO_UG_2832HSWEG04=1 -DI2C_MASTER_CALLBACK_MODE=false -DIND_BAND=1 -DJPN_BAND=1 -DKR_BAND=1 -DNA_BAND=1 -DPDS_ENABLE_WEAR_LEVELING -DPHY_SX1276 -DPROTOCOL_P2P -DRTC_COUNT_ASYNC=true -DSAL_TYPE=AT86RF2xx -DSPI_CALLBACK_MODE=false -DSYSTICK_MODE -DTC_ASYNC=true -DUSART_CALLBACK_MODE=true -D_DEBUG_=0 -D__SAMR34J18B__</armgcc.preprocessingassembler.general.AssemblerFlags>
@@ -714,6 +731,8 @@
             <Value>../src/ASF/thirdparty/wireless/services/sleep_mgr</Value>
             <Value>../src/ASF/thirdparty/wireless/services/trx_access</Value>
             <Value>../src/config</Value>
+            <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+            <Value>%24(PackRepoDir)\atmel\WLR089_DFP\1.0.3\include\</Value>
           </ListValues>
         </armgcc.preprocessingassembler.general.IncludePaths>
       </ArmGcc>
@@ -804,8 +823,6 @@
             <Value>../src/ASF/sam0/drivers/system/reset/reset_sam_l</Value>
             <Value>../src/ASF/sam0/drivers/tc</Value>
             <Value>../src/ASF/sam0/utils</Value>
-            <Value>../src/ASF/sam0/utils/cmsis/wlr089/include</Value>
-            <Value>../src/ASF/sam0/utils/cmsis/wlr089/source</Value>
             <Value>../src/ASF/sam0/utils/header_files</Value>
             <Value>../src/ASF/sam0/utils/preprocessor</Value>
             <Value>../src/ASF/sam0/utils/stdio/stdio_serial</Value>
@@ -841,6 +858,10 @@
             <Value>../src/ASF/thirdparty/wireless/services/sleep_mgr</Value>
             <Value>../src/ASF/thirdparty/wireless/services/trx_access</Value>
             <Value>../src/config</Value>
+            <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+            <Value>%24(PackRepoDir)\atmel\WLR089_DFP\1.0.3\include\</Value>
+            <Value>../src/ASF/sam0/utils/cmsis/wlr089/include</Value>
+            <Value>../src/ASF/sam0/utils/cmsis/wlr089/source</Value>
           </ListValues>
         </armgcc.compiler.directories.IncludePaths>
         <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
@@ -937,6 +958,8 @@
             <Value>../src/ASF/thirdparty/wireless/services/sleep_mgr</Value>
             <Value>../src/ASF/thirdparty/wireless/services/trx_access</Value>
             <Value>../src/config</Value>
+            <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+            <Value>%24(PackRepoDir)\atmel\WLR089_DFP\1.0.3\include\</Value>
           </ListValues>
         </armgcc.assembler.general.IncludePaths>
         <armgcc.assembler.debugging.DebugLevel>Default (-g)</armgcc.assembler.debugging.DebugLevel>
@@ -1011,6 +1034,8 @@
             <Value>../src/ASF/thirdparty/wireless/services/sleep_mgr</Value>
             <Value>../src/ASF/thirdparty/wireless/services/trx_access</Value>
             <Value>../src/config</Value>
+            <Value>%24(PackRepoDir)\arm\CMSIS\5.4.0\CMSIS\Core\Include\</Value>
+            <Value>%24(PackRepoDir)\atmel\WLR089_DFP\1.0.3\include\</Value>
           </ListValues>
         </armgcc.preprocessingassembler.general.IncludePaths>
         <armgcc.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcc.preprocessingassembler.debugging.DebugLevel>
@@ -1026,6 +1051,12 @@
     </PostBuildEvent>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Device_Startup\startup_wlr089u0.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Device_Startup\system_wlr089u0.c">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\ASF\common2\services\delay\sam0\systick_counter.c">
       <SubType>compile</SubType>
     </Compile>
@@ -1575,6 +1606,12 @@
     <Compile Include="src\usb_protocol_cdc.h">
       <SubType>compile</SubType>
     </Compile>
+    <None Include="Device_Startup\wlr089u0_flash.ld">
+      <SubType>compile</SubType>
+    </None>
+    <None Include="Device_Startup\wlr089u0_sram.ld">
+      <SubType>compile</SubType>
+    </None>
     <None Include="src\asf.h">
       <SubType>compile</SubType>
     </None>
@@ -2021,6 +2058,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Device_Startup\" />
     <Folder Include="src\" />
     <Folder Include="src\ASF\" />
     <Folder Include="src\ASF\common\" />

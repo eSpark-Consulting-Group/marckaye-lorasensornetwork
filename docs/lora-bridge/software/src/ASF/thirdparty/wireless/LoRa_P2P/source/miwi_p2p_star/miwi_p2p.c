@@ -2249,7 +2249,7 @@ bool MiApp_Get(miwi_params_t id, uint8_t *value)
                 #if defined(IEEE_802_15_4)
                     API_UINT16_UNION tmpPANID;
                 #endif
-#if defined (ENABLE_CONSOLE)
+#ifdef ENABLE_CONSOLE
                 printf("\r\nScan Channel ");
                 printf("%d",i);
 #endif // #if defined (ENABLE_CONSOLE)

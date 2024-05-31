@@ -47,7 +47,7 @@
 #ifndef CONF_BOARD_H_INCLUDED
 #define CONF_BOARD_H_INCLUDED
 
-//#define ENABLE_CONSOLE
+#define ENABLE_CONSOLE
 
 /*********** DIO Config **********/
 /*Enable the required DIO's*/

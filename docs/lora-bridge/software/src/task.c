@@ -188,7 +188,7 @@ bool Initialize_Demo(bool freezer_enable)
 	bool invalidIEEEAddrFlag = false;
 	uint64_t invalidIEEEAddr;
 
-    MiApp_SubscribeDataIndicationCallback(ReceivedDataIndication);
+    MiApp_SubscribeDataIndicationCallback(ReceivedDataIndication);//LoRa Packet Received
 
 #ifdef ENABLE_SLEEP_FEATURE
 	sm_init();
@@ -254,13 +254,13 @@ bool Initialize_Demo(bool freezer_enable)
 		PHY_GetAttribute(SPREADING_FACTOR, (void *)&sf) ;
 		RadioLoRaBandWidth_t bw ;
 		PHY_GetAttribute(BANDWIDTH, (void *)&bw) ;
-		//printf("\r\n-----------------------------------------------------\r\n") ;
-		//printf("RF Parameters\r\n") ;
-		//printf(" - Tx output power: %d\r\n", txPower) ;
-		//printf(" - PA boost: %d\r\n", paBoost) ;
-		//printf(" - Spreading factor: SF%d\r\n", sf) ;
-		//printf(" - Bandwidth (125kHz=7, 250kHz=8, 500kHz=9): %d", bw) ;
-		//printf("\r\n-----------------------------------------------------\r\n") ;
+		printf("\r\n-----------------------------------------------------\r\n") ;
+		printf("RF Parameters\r\n") ;
+		printf(" - Tx output power: %d\r\n", txPower) ;
+		printf(" - PA boost: %d\r\n", paBoost) ;
+		printf(" - Spreading factor: SF%d\r\n", sf) ;
+		printf(" - Bandwidth (125kHz=7, 250kHz=8, 500kHz=9): %d", bw) ;
+		printf("\r\n-----------------------------------------------------\r\n") ;
 		
 /*		
 		// -- For reference: set RF parameters just after protocol initialization

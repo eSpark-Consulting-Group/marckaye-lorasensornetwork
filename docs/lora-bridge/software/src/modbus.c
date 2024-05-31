@@ -74,12 +74,12 @@ static uint8_t putb(uint8_t b)
 /// \return >=0 for data if successful, otherwise -ve number indicates error
 /// \sa Timer_elapsed_msec, Timer_read, getch2, crc_update, kbhit2
 ///
-static int16_t	getb(void)
+static int16_t	getb(int16_t byte)
 	{
 		uint8_t t;
 
 		// any data?
-		if(!udi_cdc_is_rx_ready())
+		if(0)//!udi_cdc_is_rx_ready()
 		{
 			// no, process timeout
 			if(MiWi_TickGetDiff((MIWI_TICK)MiWi_TickGet(),(MIWI_TICK)wait_timer) >  MODBUS_TIMEOUT)
@@ -93,12 +93,13 @@ static int16_t	getb(void)
 			wait_timer=MiWi_TickGet();
 
 			// read data
-			t=udi_cdc_getc();
+			t=byte;
 
 			// update crc
 			crc_update(&mb_crc,t);
 
 			// return data
+			printf("Value from t: %d\r\n",t);
 			return t;
 		}
 	} // checked
@@ -162,17 +163,15 @@ void	Modbus_initialise(uint8_t device_lo, uint8_t device_hi)
 /// \sa Modbus_Idle, enable_tx2,getb,Setpoint_read8,exception_response
 /// \sa Read_register, Write_register, putc2, Setpoint_read
 ///
-void 	Modbus(bool test)
+void 	Modbus(bool test, int16_t byte)
 {
-		
-		bool cont=true;
-		
-		while(cont)
-		{
-			
+	bool cont=true;
+	//while(cont)
+	//{
 		cont=false;
 		
-		switch(state) {
+		switch(state) 
+		{
 			default:
 			case MB_IDLE:	// scanning for device code
 
@@ -184,7 +183,7 @@ void 	Modbus(bool test)
 					else
 					{
 
-						data=getb();
+						data=getb(byte);
 						if((uint8_t)data >= device_id_lo && (uint8_t)data <= device_id_hi)
 						{
 
@@ -193,16 +192,15 @@ void 	Modbus(bool test)
 							state=MB_GET_HEADER;
 							cont=true;
 						}
-						else
-							Modbus_Idle();
+						//else
+							//Modbus_Idle();
 					}
 
 					break;
 
 			case MB_GET_HEADER: // reading in header
 
-
-					data=getb();
+					data=getb(byte);
 					if(data >= 0)
 					{
 						cont=true;
@@ -215,7 +213,7 @@ void 	Modbus(bool test)
 								switch(header[1])
 								{
 									default:
-
+//
 										exception_response(ILLEGAL_FUNCTION);
 										break;
 
@@ -223,8 +221,10 @@ void 	Modbus(bool test)
 									case READ_INPUT_REGISTERS:
 									case PRESET_SINGLE_REGISTER:
 									
-										// forward modbus packet to LoRa channel
-										
+										 //forward modbus packet to LoRa channel
+										printf("Header: ");
+										for(int j=0;j<MB_HEADER_LEN+2;j++)
+											printf("%x \r\n",header[j]);
 										p2p_demo_send_data(0, 0, header, MB_HEADER_LEN+2) ;
 
 										// wait for next one
@@ -247,19 +247,18 @@ void 	Modbus(bool test)
 							Modbus_Idle();
 					}
 					break;
-
-
+					
 			case MB_PUT_ERROR: // sending error response
 
 			//		FireLED();
 
-				 	if(putb(header[_index]))
-				 	{
-					 cont=true;
-					 
-					 if(++_index >= 3u)
-						state = MB_PUT_CRCHI;
-					}
+				 	//if(putb(header[_index]))
+				 	//{
+					 //cont=true;
+					 //
+					 //if(++_index >= 3u)
+						//state = MB_PUT_CRCHI;
+					//}
 
 				break;
 
@@ -269,14 +268,14 @@ void 	Modbus(bool test)
 			//		FireLED();
 
 					 // sending CRC code MSB
-					 if(!udi_cdc_is_tx_ready())
-						 break;
-
-					 if(udi_cdc_putc(mb_crc >> 8))
-					 {
-						 cont=true;
-					 	state = MB_PUT_CRCLO;
-					 }
+					 //if(!udi_cdc_is_tx_ready())
+						 //break;
+//
+					 //if(udi_cdc_putc(mb_crc >> 8))
+					 //{
+						 //cont=true;
+					 	//state = MB_PUT_CRCLO;
+					 //}
 					break;
 
 			case MB_PUT_CRCLO:
@@ -284,16 +283,16 @@ void 	Modbus(bool test)
 			//		FireLED();
 
 					 // sending CRC code MSB
-					 if(!udi_cdc_is_tx_ready())
-						break;
+					 //if(!udi_cdc_is_tx_ready())
+						//break;
 					 
-					 if(udi_cdc_putc(mb_crc & 0xFF))
-					 {
-							Modbus_Idle();
-					 }
+					 //if(udi_cdc_putc(mb_crc & 0xFF))
+					 //{
+							//Modbus_Idle();
+					 //}
 					break;
 
 
 		}
-	}
+	//}
 }

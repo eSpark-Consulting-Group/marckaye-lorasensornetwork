@@ -474,7 +474,7 @@ void http_hit()
 
 void setup()
 { 
-  // pinMode(27, INPUT);
+  pinMode(27, INPUT_PULLDOWN);
   establishConnection();
   Serial1.begin(115200, SERIAL_8N1, SERIAL_PORT_RX, SERIAL_PORT_TX); // Serial1 with baud rate 9600
   Serial.print("Received: ");
@@ -482,30 +482,6 @@ void setup()
 
 void loop()
 {
-  if (Serial1.available()) 
-  {
-    // Print the incoming data to the Serial Monitor
-    String ch=Serial1.readStringUntil('\n');
-    Serial.println(ch);
-    
-    // Parse the data packet
-    if (parseDataPacket(ch.c_str(), value, arraySize))
-    {
-      // Print the parsed value for debugging
-      Serial.println("Value Parsed!");
-    } 
-    else
-    {
-      Serial.println("Invalid packet format.");
-    }
-    message.light=(value[15]<<8)|value[16]; message.temp=(value[18]<<8)|value[18];  
-    message.humid=(value[19]<<8)|value[20]; message.Voc=(value[21]<<8)|value[22];   
-    message.O2=(value[23]<<8)|value[24];    message.NDIR=(value[25]<<8)|value[26];  
-    message.S302=(value[27]<<8)|value[28];  message.S402=(value[29]<<8)|value[30];  
-    message.S502=(value[31]<<8)|value[32];  message.S602=(value[33]<<8)|value[34];  
-    message.S702=(value[35]<<8)|value[36];  message.S802=(value[37]<<8)|value[38];  
-    message.Voc2=(value[39]<<8)|value[40];  message.heater=(value[41]<<8)|value[42];
-  }
   if (WiFi.status() != WL_CONNECTED)
   {
     connectToWiFi();
@@ -520,7 +496,7 @@ void loop()
 #endif
   else if (millis() > next_telemetry_send_time_ms)
   {
-    delay(100);
+    // delay(100);
     // if(count ==0 && digitalRead(27))
     // {
     //   for(int i=10;i<=12;i++)
@@ -528,8 +504,32 @@ void loop()
     //   count++;
     // }
 
-    if(1)
+    if(digitalRead(27))
     {
+      if (Serial1.available()) 
+      {
+        // Print the incoming data to the Serial Monitor
+        String ch=Serial1.readStringUntil('\n');
+        Serial.println(ch);
+        
+        // Parse the data packet
+        if (parseDataPacket(ch.c_str(), value, arraySize))
+        {
+          // Print the parsed value for debugging
+          Serial.println("Value Parsed!");
+        } 
+        else
+        {
+          Serial.println("Invalid packet format.");
+        }
+        message.light=(value[15]<<8)|value[16]; message.temp=(value[18]<<8)|value[18];  
+        message.humid=(value[19]<<8)|value[20]; message.Voc=(value[21]<<8)|value[22];   
+        message.O2=(value[23]<<8)|value[24];    message.NDIR=(value[25]<<8)|value[26];  
+        message.S302=(value[27]<<8)|value[28];  message.S402=(value[29]<<8)|value[30];  
+        message.S502=(value[31]<<8)|value[32];  message.S602=(value[33]<<8)|value[34];  
+        message.S702=(value[35]<<8)|value[36];  message.S802=(value[37]<<8)|value[38];  
+        message.Voc2=(value[39]<<8)|value[40];  message.heater=(value[41]<<8)|value[42];
+      }
       http_hit();
       sendTelemetry();
       next_telemetry_send_time_ms = millis() + TELEMETRY_FREQUENCY_MILLISECS;

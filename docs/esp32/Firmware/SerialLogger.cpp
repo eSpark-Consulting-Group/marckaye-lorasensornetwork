@@ -8,7 +8,7 @@ void SerialLogger::writeTime()
 {
   struct tm* ptm;
   time_t now = time(NULL);
-
+  now += GMT_OFFSET;
   ptm = gmtime(&now);
 
   Serial.print(ptm->tm_year + UNIX_EPOCH_START_YEAR);

@@ -10,6 +10,7 @@
 #define SERIAL_LOGGER_BAUD_RATE 115200
 #endif
 
+#define GMT_OFFSET 8*3600
 #define UNIX_EPOCH_START_YEAR 1900
 
 class SerialLogger

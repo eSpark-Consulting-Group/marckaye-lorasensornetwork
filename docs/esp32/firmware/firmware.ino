@@ -361,7 +361,7 @@ static void generateTelemetryPayload()
   // This sample shows how to generate the payload using a syntax closer to regular delevelopment for Arduino, with
   // String type instead of az_span as it might be done in other samples. Using az_span has the advantage of reusing the 
   // same char buffer instead of dynamically allocating memory each time, as it is done by using the String type below.
-  //telemetry_payload = "{\"deviceName\":\"Unit3\",\"s302\":2,\"s402\":1,\"s502\":3,\"s602\":4,\"s702\":5,\"s802\":6,\"temp\":7,\"ndir\":8,\"nox\":9,\"voc\":10,\"voc2\":11,\"o2\":12,\"humid\":13,\"light\":14,\"gpsx\":115.83794,\"gpsy\":-32.06731,\"ef\":null,\"postedTime\":\"2024-06-03T20:50:17.301\",\"note\":\"completed\"},";
+  // telemetry_payload = "{\"deviceName\":\"Unit3\",\"s302\":2,\"s402\":1,\"s502\":3,\"s602\":4,\"s702\":5,\"s802\":6,\"temp\":7,\"ndir\":8,\"nox\":9,\"voc\":10,\"voc2\":11,\"o2\":12,\"humid\":13,\"light\":14,\"gpsx\":115.83794,\"gpsy\":-32.06731,\"ef\":null,\"postedTime\":\"2024-6-6T0:46:46.301\",\"note\":\"completed\"},";
   
   String telemetry_payload = String("{\"deviceName\":\"Unit3\",") +
                               "\"s302\":" + String(message.S302) + "," +
@@ -381,7 +381,7 @@ static void generateTelemetryPayload()
                               "\"gpsx\":115.83794," +
                               "\"gpsy\":-32.06731," +
                               "\"ef\":null," +
-                              "\"postedTime\":\"2024-06-03T20:50:17.301\"," +
+                              "\"postedTime\":" + String(time_current) + "," +
                               "\"note\":\"completed\"}";
   
   Logger.Info(telemetry_payload);
@@ -425,7 +425,7 @@ void http_hit()
   // HTTPClient http;
   struct tm* ptm;
   time_t now = time(NULL);
-
+  now += GMT_OFFSET;
   ptm = gmtime(&now);
 
   int year = ptm->tm_year + UNIX_EPOCH_START_YEAR;

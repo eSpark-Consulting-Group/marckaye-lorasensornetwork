@@ -361,28 +361,28 @@ static void generateTelemetryPayload()
   // This sample shows how to generate the payload using a syntax closer to regular delevelopment for Arduino, with
   // String type instead of az_span as it might be done in other samples. Using az_span has the advantage of reusing the 
   // same char buffer instead of dynamically allocating memory each time, as it is done by using the String type below.
-  // telemetry_payload = "{\"deviceName\":\"Unit3\",\"s302\":2,\"s402\":1,\"s502\":3,\"s602\":4,\"s702\":5,\"s802\":6,\"temp\":7,\"ndir\":8,\"nox\":9,\"voc\":10,\"voc2\":11,\"o2\":12,\"humid\":13,\"light\":14,\"gpsx\":115.83794,\"gpsy\":-32.06731,\"ef\":null,\"postedTime\":\"2024-6-6T13:20:36.301\",\"note\":\"completed\"},";
+  telemetry_payload = "{\"deviceName\":\"Unit3\",\"s302\":2,\"s402\":1,\"s502\":3,\"s602\":4,\"s702\":5,\"s802\":6,\"temp\":7,\"ndir\":8,\"nox\":9,\"voc\":10,\"voc2\":11,\"o2\":12,\"humid\":13,\"light\":14,\"gpsx\":115.83794,\"gpsy\":-32.06731,\"ef\":null,\"postedTime\":\"2024-11-7T14:25:36.301\",\"note\":\"completed\"},";
   
-  telemetry_payload = String("{\"deviceName\":\"Unit3\",") +
-                          "\"s302\":" + String(message.S302) + "," +
-                          "\"s402\":" + String(message.S402) + "," +
-                          "\"s502\":" + String(message.S502) + "," +
-                          "\"s602\":" + String(message.S602) + "," +
-                          "\"s702\":" + String(message.S702) + "," +
-                          "\"s802\":" + String(message.S802) + "," +
-                          "\"temp\":" + String(message.temp) + "," +
-                          "\"ndir\":" + String(message.NDIR) + "," +
-                          "\"nox\":" + String(message.Nox) + "," +
-                          "\"voc\":" + String(message.Voc) + "," +
-                          "\"voc2\":" + String(message.Voc2) + "," +
-                          "\"o2\":" + String(message.O2) + "," +
-                          "\"humid\":" + String(message.humid) + "," +
-                          "\"light\":" + String(message.light) + "," +
-                          "\"gpsx\":115.83794," +
-                          "\"gpsy\":-32.06731," +
-                          "\"ef\":null," +
-                          "\"postedTime\":\"" + String(time_current) + "\"," +  // Ensure time is in quotes
-                          "\"note\":\"completed\"}";
+  // telemetry_payload = String("{\"deviceName\":\"Unit3\",") +
+  //                         "\"s302\":" + String(message.S302) + "," +
+  //                         "\"s402\":" + String(message.S402) + "," +
+  //                         "\"s502\":" + String(message.S502) + "," +
+  //                         "\"s602\":" + String(message.S602) + "," +
+  //                         "\"s702\":" + String(message.S702) + "," +
+  //                         "\"s802\":" + String(message.S802) + "," +
+  //                         "\"temp\":" + String(message.temp) + "," +
+  //                         "\"ndir\":" + String(message.NDIR) + "," +
+  //                         "\"nox\":" + String(message.Nox) + "," +
+  //                         "\"voc\":" + String(message.Voc) + "," +
+  //                         "\"voc2\":" + String(message.Voc2) + "," +
+  //                         "\"o2\":" + String(message.O2) + "," +
+  //                         "\"humid\":" + String(message.humid) + "," +
+  //                         "\"light\":" + String(message.light) + "," +
+  //                         "\"gpsx\":115.83794," +
+  //                         "\"gpsy\":-32.06731," +
+  //                         "\"ef\":null," +
+  //                         "\"postedTime\":\"" + String(time_current) + "\"," +  // Ensure time is in quotes
+  //                         "\"note\":\"completed\"}";
   
   Logger.Info(telemetry_payload);
   delay(150);
@@ -470,8 +470,6 @@ void http_hit()
   // http.end();
 }
 
-// Arduino setup and loop main functions.
-
 void setup()
 { 
   pinMode(27, INPUT_PULLDOWN);
@@ -504,35 +502,42 @@ void loop()
     //   count++;
     // }
 
-    if(digitalRead(27))
+    if(1)
     {
-      if (Serial1.available()) 
-      {
-        // Print the incoming data to the Serial Monitor
-        String ch=Serial1.readStringUntil('\n');
-        Serial.println(ch);
+      // if (Serial1.available()) 
+      // {
+      //   // Print the incoming data to the Serial Monitor
+      //   String ch=Serial1.readStringUntil('\n');
+      //   Serial.println(ch);
         
-        // Parse the data packet
-        if (parseDataPacket(ch.c_str(), value, arraySize))
-        {
+      //   // Parse the data packet
+      //   if (parseDataPacket(ch.c_str(), value, arraySize))
+      //   {
           // Print the parsed value for debugging
-          Serial.println("Value Parsed!");
-          message.light=(value[15]<<8)|value[16]; message.temp=(value[18]<<8)|value[18];  
-          message.humid=(value[19]<<8)|value[20]; message.Voc=(value[21]<<8)|value[22];   
-          message.O2=(value[23]<<8)|value[24];    message.NDIR=(value[25]<<8)|value[26];  
-          message.S302=(value[27]<<8)|value[28];  message.S402=(value[29]<<8)|value[30];  
-          message.S502=(value[31]<<8)|value[32];  message.S602=(value[33]<<8)|value[34];  
-          message.S702=(value[35]<<8)|value[36];  message.S802=(value[37]<<8)|value[38];  
-          message.Voc2=(value[39]<<8)|value[40];  message.heater=(value[41]<<8)|value[42];
+          // Serial.println("Value Parsed!");
+          // message.light=(value[15]<<8)|value[16]; message.temp=(value[18]<<8)|value[18];  
+          // message.humid=(value[19]<<8)|value[20]; message.Voc=(value[21]<<8)|value[22];   
+          // message.O2=(value[23]<<8)|value[24];    message.NDIR=(value[25]<<8)|value[26];  
+          // message.S302=(value[27]<<8)|value[28];  message.S402=(value[29]<<8)|value[30];  
+          // message.S502=(value[31]<<8)|value[32];  message.S602=(value[33]<<8)|value[34];  
+          // message.S702=(value[35]<<8)|value[36];  message.S802=(value[37]<<8)|value[38];  
+          // message.Voc2=(value[39]<<8)|value[40];  message.heater=(value[41]<<8)|value[42];
           http_hit();
           sendTelemetry();
-        } 
-        else
-        {
-          Serial.println("Invalid packet format.");
-        }
-      }
+      //   } 
+      //   else
+      //   {
+      //     Serial.println("Invalid packet format.");
+      //   }
+      // }
+      // else{
+      //     Serial.println("No data on Serial");
+    // }
       next_telemetry_send_time_ms = millis() + TELEMETRY_FREQUENCY_MILLISECS;
+      delay(1000);
+    }
+    else{
+          Serial.println("GPIO BUTTON ERROR!");
     }
   }
 }
